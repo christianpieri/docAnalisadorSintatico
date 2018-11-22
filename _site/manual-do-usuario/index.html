@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+
+    
+    <meta charset="UTF-8">
+
+<!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>INE5421 | Algoritmos para a manipulação de Linguagens Regulares</title>
+<meta name="generator" content="Jekyll v3.8.4" />
+<meta property="og:title" content="INE5421" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Algoritmos para a manipulação de Linguagens Regulares" />
+<meta property="og:description" content="Algoritmos para a manipulação de Linguagens Regulares" />
+<link rel="canonical" href="http://localhost:4000/manual-do-usuario/" />
+<meta property="og:url" content="http://localhost:4000/manual-do-usuario/" />
+<meta property="og:site_name" content="INE5421" />
+<script type="application/ld+json">
+{"description":"Algoritmos para a manipulação de Linguagens Regulares","@type":"WebPage","url":"http://localhost:4000/manual-do-usuario/","headline":"INE5421","@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#157878">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="stylesheet" href="/assets/css/style.css?v=">
+  </head>
+  <body>
+    <a id="skip-to-content" href="#content">Skip to the content.</a>
+
+    <header class="page-header" role="banner">
+      <h1 class="project-name">Algoritmos para manipulação de LR</h1>
+      <h2 class="project-tagline">Documentação do projeto da disciplina de Linguagens Formais e Compiladores da Universidade Federal de Santa Catarina - 2018.2</h2>
+      
+	<a href="https://github.com/christianpieri/INE5421" class="btn">Github .com</a>
+        <a href="https://github.com/christianpieri/INE5421/archive/master.zip" class="btn">Download .zip</a>
+        <a href="https://github.com/christianpieri/INE5421/blob/master/INE5421.tar.gz?raw=true" class="btn">Download .tar.gz</a>
+      
+    </header>
+
+    <main id="content" class="main-content" role="main">
+      <h1 id="bem-vindoa-ao-manual-do-usuário">Bem-vindo(a) ao manual do usuário!</h1>
+
+<p>Aqui serão detalhados todas as funcionalidades do sistema e como utilizá-las.</p>
+
+<h2 id="1-conhecendo-o-sistema-e-suas-funcionalidades">1. Conhecendo o sistema e suas funcionalidades</h2>
+
+<p><strong>1.</strong> No sistema é possível representar uma linguagem regular de três formas:</p>
+
+<ul>
+  <li>Autômatos finitos;</li>
+  <li>Gramáticas regulares;</li>
+  <li>Expressões regulares.</li>
+</ul>
+
+<p><strong>2.</strong> As operações podem ser realizadas em cima dessas estruturas. São elas:</p>
+
+<ul>
+  <li>Minimização de autômatos finitos determinísticos;</li>
+  <li>Determinização de autômatos finitos não determinísticos;</li>
+  <li>União de autômatos finitos;</li>
+  <li>Intersecção de autômatos finitos;</li>
+  <li>Conversão:
+    <ul>
+      <li>De autômato finito para gramática regular;</li>
+      <li>De gramática regular para autômato finito;</li>
+      <li>De expressão regular para autômato finito.</li>
+    </ul>
+  </li>
+</ul>
+
+<p><strong>3.</strong> Para rodar o sistema é necessário possuir uma instalação do <em>Java runtime</em> na versão <strong>10</strong> ou superior.</p>
+
+<h2 id="2-inserindo-as-estruturas-no-sistema">2. Inserindo as estruturas no sistema</h2>
+
+<p><strong>1.</strong> Um autômato finito deve ser inserido em um arquivo <em>.txt</em> no seguinte formato:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	a	b
+&gt;q0	q1	q0
+*q1	q1	q0
+</code></pre></div></div>
+
+<ul>
+  <li>As colunas devem ser delimitadas por tabulação;</li>
+  <li>A primeira linha representa os símbolos das funções de transição;</li>
+  <li>
+    <p>A primeira coluna representa o estado de origem da transição:</p>
+
+    <ul>
+      <li>Para indicar o estado inicial, é necessário incluir o símbolo <strong>&gt;</strong> antes do nome do estado;</li>
+      <li>Para indicar estados finais, é necessário incluir o símbolo <b> * </b> antes do nome do estado.</li>
+    </ul>
+  </li>
+</ul>
+
+<p><strong>2.</strong> Uma gramática regular deve ser inserida em um arquivo <em>.txt</em> no seguinte formato:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> S -&gt; aA | b | bC | &amp;
+ A -&gt; aB | bA
+ B -&gt; a | aC | bB
+ C -&gt; aA | bC | b 
+</code></pre></div></div>
+
+<p><em>Gramática regular que representa a linguagem {a,b}* onde o número de a’s é divisível por 3</em></p>
+
+<ul>
+  <li>
+    <p>O símbolo <em>epsilon</em> deve ser representado pelo símbolo <strong>&amp;</strong>.</p>
+  </li>
+  <li>
+    <p>O sistema aceita apenas <strong>gramáticas regulares</strong>. Gramáticas de outros tipos não serão inseridas no sistema.</p>
+  </li>
+</ul>
+
+<p><strong>3.</strong> Uma expressão regular deve ser inserida em um arquivo <em>.txt</em> no seguinte formato:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> (a+b)*abb
+</code></pre></div></div>
+
+<ul>
+  <li>A operação de “Or” deve ser representada pelo símbolo <strong>+</strong>.</li>
+</ul>
+
+<p><strong>4.</strong> A indicação de qual é o arquivo de entrada pode ser feita das seguintes formas:</p>
+
+<blockquote>
+  <p><strong>-i</strong> &lt;nome_do_arquivo&gt;</p>
+</blockquote>
+
+<blockquote>
+  <p><strong>--input</strong> &lt;nome_do_arquivo&gt;</p>
+</blockquote>
+
+<h2 id="3-arquivo-de-saída">3. Arquivo de saída</h2>
+
+<p><strong>1.</strong> O arquivo de saída irá apresentar as estruturas de acordo com a sessão <strong>2</strong>, em um arquivo <strong>.txt</strong>.</p>
+
+<p><strong>2.</strong> O arquivo será criado com o nome especificado na chamada e criado no diretório atual.</p>
+
+<p><strong>3.</strong> A indicação de qual será o nome do arquivo de saída pode ser feita das seguintes formas:</p>
+
+<blockquote>
+  <p><strong>-o</strong> &lt;nome_do_arquivo&gt;</p>
+</blockquote>
+
+<blockquote>
+  <p><strong>--out</strong> &lt;nome_do_arquivo&gt;</p>
+</blockquote>
+
+<h2 id="4-utilizando-as-operações-na-linha-de-comando">4. Utilizando as operações na linha de comando</h2>
+
+<p><strong>1.</strong> Todas as operações devem utilizar o prefixo <strong>java -jar trabalho.jar</strong>.</p>
+
+<p><strong>2.</strong> Os comandos de cada operação são os seguintes:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Operação</th>
+      <th>Comandos</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Determinização</td>
+      <td><strong>-d</strong> ou <strong>--determinizar</strong></td>
+    </tr>
+    <tr>
+      <td>Minimização</td>
+      <td><strong>-m</strong> ou <strong>--minimizar</strong></td>
+    </tr>
+    <tr>
+      <td>Converter de AFD para GR</td>
+      <td><strong>-a2g</strong> ou <strong>--gr2af</strong></td>
+    </tr>
+    <tr>
+      <td>Converter GR para AFND</td>
+      <td><strong>-g2a</strong> ou <strong>--gr2af</strong></td>
+    </tr>
+    <tr>
+      <td>Converter ER para AFD</td>
+      <td><strong>-e2a</strong> ou <strong>--er2af</strong></td>
+    </tr>
+    <tr>
+      <td>União entre AFs</td>
+      <td><strong>-aua</strong> ou <strong>--union</strong></td>
+    </tr>
+    <tr>
+      <td>Intersecção entre AFs</td>
+      <td><strong>-aia</strong> ou <strong>--intersection</strong></td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>3.</strong> A expressão geral para realizar uma operação com um arquivo de entrada e um arquivo de saída é:</p>
+
+<blockquote>
+  <p>java -jar <em>trabalho.jar</em> &lt;comando_da_operação&gt; <strong>-i</strong> &lt;nome_do_arquivo_entrada&gt; <strong>-o</strong> &lt;nome_do_arquivo_saída&gt;</p>
+</blockquote>
+
+<p><strong>4.</strong> A expressão geral para realizar uma operação com dois arquivos de entrada e um arquivo de saída é:</p>
+
+<blockquote>
+  <p>java -jar <em>trabalho.jar</em> &lt;comando_da_operação&gt; <strong>-i</strong> &lt;nome_do_arquivo_entrada_1&gt; &lt;nome_do_arquivo_entrada_2&gt; <strong>-o</strong> &lt;nome_do_arquivo_saída&gt;</p>
+</blockquote>
+
+<p><strong>5.</strong> Para obter ajuda, utilizar os comandos <strong>-h</strong> ou <strong>--help</strong>.</p>
+
+<p><br />
+<a href="../">Voltar</a></p>
+
+
+      <footer class="site-footer">
+        
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a>.</span>
+      </footer>
+    </main>
+  </body>
+</html>

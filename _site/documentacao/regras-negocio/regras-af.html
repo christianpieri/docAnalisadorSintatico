@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+
+    
+    <meta charset="UTF-8">
+
+<!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>INE5421 | Algoritmos para a manipulação de Linguagens Regulares</title>
+<meta name="generator" content="Jekyll v3.8.4" />
+<meta property="og:title" content="INE5421" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Algoritmos para a manipulação de Linguagens Regulares" />
+<meta property="og:description" content="Algoritmos para a manipulação de Linguagens Regulares" />
+<link rel="canonical" href="http://localhost:4000/documentacao/regras-negocio/regras-af.html" />
+<meta property="og:url" content="http://localhost:4000/documentacao/regras-negocio/regras-af.html" />
+<meta property="og:site_name" content="INE5421" />
+<script type="application/ld+json">
+{"description":"Algoritmos para a manipulação de Linguagens Regulares","@type":"WebPage","url":"http://localhost:4000/documentacao/regras-negocio/regras-af.html","headline":"INE5421","@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#157878">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="stylesheet" href="/assets/css/style.css?v=">
+  </head>
+  <body>
+    <a id="skip-to-content" href="#content">Skip to the content.</a>
+
+    <header class="page-header" role="banner">
+      <h1 class="project-name">Algoritmos para manipulação de LR</h1>
+      <h2 class="project-tagline">Documentação do projeto da disciplina de Linguagens Formais e Compiladores da Universidade Federal de Santa Catarina - 2018.2</h2>
+      
+	<a href="https://github.com/christianpieri/INE5421" class="btn">Github .com</a>
+        <a href="https://github.com/christianpieri/INE5421/archive/master.zip" class="btn">Download .zip</a>
+        <a href="https://github.com/christianpieri/INE5421/blob/master/INE5421.tar.gz?raw=true" class="btn">Download .tar.gz</a>
+      
+    </header>
+
+    <main id="content" class="main-content" role="main">
+      <h3 id="1-autômato-finito">1. Autômato finito</h3>
+
+<p>Um autômato finito é uma máquina de estados que pode ser representado formalmente por uma quíntupla (<strong>Q</strong>,<strong>Σ</strong>,<strong>δ</strong>,<strong>q0</strong>,<strong>F</strong>), onde:</p>
+
+<ul>
+  <li><strong>Q</strong> é um conjunto finito de estados;</li>
+  <li><strong>Σ</strong> é o alfabeto do autômato, que é representado por um conjunto finito de símbolos;</li>
+  <li><strong>δ</strong> é um conjunto de funções de transição da forma <strong>Q</strong> x <strong>Σ</strong> → <strong>Q</strong>;</li>
+  <li><strong>q0</strong> é o estado inicial do autômato, onde é iniciada a computação antes de nenhum símbolo do alfabeto ter sido computado;</li>
+  <li><strong>F</strong> é o conjunto de estados finais do autômato, também conhecidos como estados de aceitação.</li>
+</ul>
+
+<p>Um autômato finito pode reconhecer uma <strong>linguagem regular</strong>. A linguagem que um autômato reconhece é o conjunto de todas as palavras que quando computadas terminam em um estado de aceitação.</p>
+
+<h4 id="12-autômato-finito-determinístico">1.2 Autômato finito determinístico</h4>
+
+<p>Um autômato finito determinístico é um autômato finito que gera um único ramo de computação para cada palavra de entrada. Ou seja, cada estado possui no máximo uma transição por cada símbolo, não é possível ler um símbolo da entrada e transitar para mais de um estado.</p>
+
+<h4 id="13-autômato-finito-não-determinístico">1.3 Autômato finito não determinístico</h4>
+
+<p>Um autômato finito não determinístico é um autômato finito que pode gerar vários ramos de computação para uma palavra de entrada. A palavra faz parte da linguagem reconhecida pelo autômato se algum dos ramos resultar em um estado de aceitação no final da computação.</p>
+
+<h3 id="2-implementação">2. Implementação</h3>
+
+<p><strong>1.</strong> Apenas uma classe foi utilizada para implementar os autômatos finitos determinísticos e não determinísticos. A diferenciação não foi necessária pois ambos são autômatos finitos, logo possuem a mesma estrutura.</p>
+
+<ul>
+  <li>Para diferenciar AFDs de AFNDs, verificamos a existência do símbolo <strong>&amp;</strong> e, em caso negativo, verificamos cada conjunto imagem das funções de transição de cada estado. Na existência de um conjunto não unitário é caracterizado o não determinismo.</li>
+</ul>
+
+<p><strong>2.</strong> Para a representação de um estado, é utilizada a classe <em>State</em>, que possui como atributos um identificador e um nome.</p>
+
+<p><strong>3.</strong> Para a representação de um símbolo, é utilizada a classe <em>Symbol</em>, que possui como atributo um caractere que representa o símbolo.</p>
+
+<p><strong>4.</strong> Um autômato finito possui os seguintes atributos:</p>
+
+<ul>
+  <li><strong>initialState</strong>: é do tipo <em>State</em> e representa o estado inicial;</li>
+  <li><strong>errorState</strong>: é do tipo <em>State</em> e representa um estado de erro;</li>
+  <li><strong>finalStates</strong>: é um conjunto de objetos do tipo <em>State</em> e representa os estados finais;</li>
+  <li><strong>transitionTable</strong>: é um mapa com a chave sendo um <em>State</em> e o valor sendo outro mapa que possui um <strong>Symbol</strong> como chave e um conjunto de objetos do tipo <em>State</em> como valor.</li>
+</ul>
+
+<p><strong>5.</strong> O próprio autômato finito possui as operações realizadas em cima de autômatos. São elas:</p>
+
+<ul>
+  <li><strong>minimize</strong>: minimiza o autômato;</li>
+  <li><strong>determinize</strong> determiniza o autômato;</li>
+  <li><strong>union</strong>: realiza a união de dois autômatos;</li>
+  <li><strong>intersection</strong>: realiza a intersecção de dois autômatos;</li>
+  <li><strong>complement</strong>: transforma o autômato em seu complemento.</li>
+</ul>
+
+<p><strong>6.</strong> Ao executar alguma operação, o autômato que a executou será alterado de forma a receber o resultado da operação. Ou seja, não é criado um autômato novo para armazenar o resultado.</p>
+
+<p><br />
+<a href="./">Voltar</a></p>
+
+
+      <footer class="site-footer">
+        
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a>.</span>
+      </footer>
+    </main>
+  </body>
+</html>

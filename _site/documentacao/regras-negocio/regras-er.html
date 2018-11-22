@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+
+    
+    <meta charset="UTF-8">
+
+<!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>INE5421 | Algoritmos para a manipulação de Linguagens Regulares</title>
+<meta name="generator" content="Jekyll v3.8.4" />
+<meta property="og:title" content="INE5421" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Algoritmos para a manipulação de Linguagens Regulares" />
+<meta property="og:description" content="Algoritmos para a manipulação de Linguagens Regulares" />
+<link rel="canonical" href="http://localhost:4000/documentacao/regras-negocio/regras-er.html" />
+<meta property="og:url" content="http://localhost:4000/documentacao/regras-negocio/regras-er.html" />
+<meta property="og:site_name" content="INE5421" />
+<script type="application/ld+json">
+{"description":"Algoritmos para a manipulação de Linguagens Regulares","@type":"WebPage","url":"http://localhost:4000/documentacao/regras-negocio/regras-er.html","headline":"INE5421","@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#157878">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="stylesheet" href="/assets/css/style.css?v=">
+  </head>
+  <body>
+    <a id="skip-to-content" href="#content">Skip to the content.</a>
+
+    <header class="page-header" role="banner">
+      <h1 class="project-name">Algoritmos para manipulação de LR</h1>
+      <h2 class="project-tagline">Documentação do projeto da disciplina de Linguagens Formais e Compiladores da Universidade Federal de Santa Catarina - 2018.2</h2>
+      
+	<a href="https://github.com/christianpieri/INE5421" class="btn">Github .com</a>
+        <a href="https://github.com/christianpieri/INE5421/archive/master.zip" class="btn">Download .zip</a>
+        <a href="https://github.com/christianpieri/INE5421/blob/master/INE5421.tar.gz?raw=true" class="btn">Download .tar.gz</a>
+      
+    </header>
+
+    <main id="content" class="main-content" role="main">
+      <h3 id="1-expressão-regular">1. Expressão regular</h3>
+
+<p>Uma expressão regular é uma representação dos padrões que as palavras de uma determinada linguagem obedecem. Ela é formada por um alfabeto e um conjunto de operações. São elas:</p>
+
+<ul>
+  <li>União;</li>
+  <li>Concatenação;</li>
+  <li>Fecho.</li>
+</ul>
+
+<p>A expressão regular admite o uso de parênteses. O operador de fechamento tem maior precedência, seguido da concatenação e união.</p>
+
+<h3 id="2-implementação">2. Implementação</h3>
+
+<p><strong>1.</strong> Uma expressão regular possui os seguintes atributos básicos:</p>
+
+<ul>
+  <li><strong>regex</strong>: é do tipo <em>String</em> e representa a expressão regular em si.</li>
+  <li><strong>operators</strong>: é um conjunto de caracteres que representam os operadores de uma expressão regular, que são “.”, “+”, “*”, “(“ e “)”.</li>
+</ul>
+
+<h4 id="21-conversão-de-expressão-regular-para-autômato-finito">2.1 Conversão de expressão regular para autômato finito</h4>
+
+<p><strong>1.</strong> Para realizar o algoritmo de conversão de expressão regular para autômato finito, precisamos construir primeiramente a árvore sintática extendida. Ela possui como nodo um objeto do tipo <strong>Node</strong>, que possui os seguintes atributos:</p>
+
+<ul>
+  <li><strong>id</strong>: um valor do tipo <em>int</em> para identificação do nodo;</li>
+  <li><strong>parent</strong>: é do tipo <em>Node</em> e representa o nodo pai;</li>
+  <li><strong>left</strong>: é do tipo <em>Node</em> e representa o nodo vizinho a esquerda;</li>
+  <li><strong>right</strong>: é do tipo <em>Node</em> e representa o nodo vizinho a direita;</li>
+  <li><strong>value</strong>: é um caracter que representa o valor do nodo.</li>
+</ul>
+
+<p>Para a construção da árvore utilizamos a operação <strong>convertToPostFix</strong>, que Transforma a string da expressão regular para a notação posfixa, tornando fácil a execução das operações utilizando pilhas para armazenar os operadores e operandos.</p>
+
+<p><strong>2.</strong> A partir desta árvore, são necessárias quatro operações nos nodos para a obtenção do autômato:</p>
+
+<ul>
+  <li>
+    <p><strong>nullable</strong>: é a verificação se um determinado nó é anulável, e por consequência a sua subárvore também será. Ele será utilizado depois na produção dos <em>firstPos</em> e <em>lastPos</em> da ávore.</p>
+  </li>
+  <li>
+    <p><strong>firstPos</strong>: é o cálculo das primeiras posições da árvore. Ele só é calculado quando há necessidade. O <em>firstpos</em> da raíz da árvore será utilizado, no final do algoritmo, como estado inicial do autômato resultante. Os <em>firstPos</em> também são utilizados na função de <em>followPos</em>.</p>
+  </li>
+  <li>
+    <p><strong>lastPos</strong>: é a função que verifica as ultimas posições possíveis de cada nó. É calculado recursivamente e conforme a necessidade. Ele é utilizado nos calculos do <em>followPos</em>.</p>
+  </li>
+  <li>
+    <p>o <strong>followPos</strong>: é o calculo das possíveis posições seguintes representadas por cada nodo folha i da árvore. A partir dele conseguimos montar o conjunto “DStates”, dizer quais são os estados do AFD resultantes e suas respectivas transições.</p>
+  </li>
+</ul>
+
+<p><strong>2.</strong> Os resultados destas operações são salvos como atributos de uma expressão regular:</p>
+
+<ul>
+  <li><strong>nullable</strong>: é formado por um mapa que possui como chave um nodo e como valor um <em>boolean</em>, indicando se o nodo é anulável ou não;</li>
+  <li><strong>firstPos</strong>: é formado por um mapa que possui como chave um nodo e como valor um conjunto de nodos;</li>
+  <li><strong>lastPos</strong>: é formado por um mapa que possui como chave um nodo e como valor um conjunto de nodos;</li>
+  <li>o <strong>followPos</strong>: é formado por um mapa que possui como chave um inteiro e como valor um conjunto de nodos.</li>
+</ul>
+
+<p><strong>3.</strong> A operação que converte a expressão regular para autômato finito é a <strong>toFiniteAutomata</strong>. Ela chama as operações:</p>
+
+<ul>
+  <li><strong>computeNullable</strong>;</li>
+  <li><strong>computeFirstPos</strong>;</li>
+  <li><strong>computeLastPos</strong>;</li>
+  <li><strong>computeFollowPos</strong>.</li>
+</ul>
+
+<p>Após realizá-las, é chamada a operação <strong>buildFiniteAutomata</strong>, que monta o autômato finito de acordo com as operações realizadas.</p>
+
+<p><br />
+<a href="./">Voltar</a></p>
+
+
+      <footer class="site-footer">
+        
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a>.</span>
+      </footer>
+    </main>
+  </body>
+</html>
